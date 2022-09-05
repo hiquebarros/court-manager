@@ -45,6 +45,14 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'rest_framework.authtoken',
     'users',
+    'addresses',
+    'court_types',
+    'courts',
+    'facilities',
+    'payment_informations',
+    'reviews',
+    'schedules',
+    'time_dates'
 ]
 
 
