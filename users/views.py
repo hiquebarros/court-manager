@@ -6,7 +6,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from users.serializers import UserSerializer, LoginSerializer, UserDetailSerializer
-from users.permissions import IsOwner, IsAdmin
+from users.permissions import IsOwnerOrAdmin
 
 class ListUsersView(generics.ListAPIView):
     queryset = User.objects.all()
@@ -31,7 +31,7 @@ class LoginView(APIView):
 
 class UserDetailsView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAdmin or IsOwner]
+    permission_classes = [IsOwnerOrAdmin]
     queryset = User.objects.all()
     serializer_class = UserDetailSerializer
-    lookup_field = 'id'
+    lookup_url_kwarg = 'user_id'
