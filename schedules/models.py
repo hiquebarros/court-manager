@@ -3,10 +3,9 @@ import uuid
 
 class Schedule(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    time_date = models.ForeignKey(
-        "time_dates.Time_date", on_delete=models.CASCADE, related_name="schedules"
-    )
-    user = models.ForeignKey(
-        "users.User", on_delete=models.CASCADE, related_name="schedules"
-    )
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    datetime = models.DateField()
+    is_available = models.BooleanField()
     
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="schedule")
+    court = models.ForeignKey("courts.Court", on_delete=models.CASCADE, related_name="schedule")

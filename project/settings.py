@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'payment_informations',
     'reviews',
     'schedules',
-    'time_dates'
 ]
 
 
