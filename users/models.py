@@ -1,5 +1,4 @@
 import uuid
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -14,4 +13,4 @@ class User(AbstractUser):
     is_owner = models.BooleanField(null=True, blank=True, default=False)
 
 
-    REQUIRED_FIELDS =["first_name", "last_name"]
+    REQUIRED_FIELDS =["email", "first_name", "last_name"]
