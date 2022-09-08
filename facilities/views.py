@@ -4,7 +4,7 @@ from rest_framework.authentication import TokenAuthentication
 
 from facilities.models import Facility
 
-from .permissions import IsAOwner, IsAOwnOwner
+from .permissions import IsAOwner, IsAOwnOwner, IsAOwnOwnerOrAdmin
 from .serializers import FacilitySerializer
 
 
@@ -26,7 +26,7 @@ class FacilityDetailView(generics.UpdateAPIView):
 
 class FacilityDeleteView(generics.DestroyAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = []
+    permission_classes = [IsAOwnOwnerOrAdmin]
     serializer_class = FacilitySerializer
     queryset = Facility.objects.all()
-    lookup_url_kwarg = "sport_facility"
+    lookup_url_kwarg = "sport_facility_id"
