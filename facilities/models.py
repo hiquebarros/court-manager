@@ -1,5 +1,7 @@
-from django.db import models
 import uuid
+
+from django.db import models
+
 
 class Facility(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
@@ -7,5 +9,5 @@ class Facility(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=60)
 
-    address = models.OneToOneField("addresses.Address", on_delete=models.CASCADE)
+    address = models.OneToOneField("addresses.Address", on_delete=models.CASCADE, null=True, blank=True)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="facilities")
