@@ -9,5 +9,5 @@ class Facility(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=60)
 
-    address = models.OneToOneField("addresses.Address", on_delete=models.CASCADE)
+    address = models.OneToOneField("addresses.Address", on_delete=models.CASCADE, null=True, blank=True)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="facilities")
