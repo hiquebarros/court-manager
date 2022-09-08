@@ -14,4 +14,4 @@ class User(AbstractUser):
     is_owner = models.BooleanField(null=True, blank=True, default=False)
 
 
-    REQUIRED_FIELDS =["first_name", "last_name"]
+    REQUIRED_FIELDS =["first_name", "last_name", "is_owner"]
