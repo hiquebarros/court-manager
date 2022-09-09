@@ -8,3 +8,4 @@ class ScheduleSerializer(serializers.ModelSerializer):
         model = Schedule
         fields = ["id", "datetime", "user", "court"]
         read_only_fields = ["user", "court"]
+        depth = 1

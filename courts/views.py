@@ -11,6 +11,14 @@ import ipdb
 class CourtView(generics.ListCreateAPIView):
     queryset = Court.objects.all()
     serializer_class = CourtSerializer
+    
+class CourtDetailView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication]
+
+    queryset = Court.objects.all()
+    serializer_class = CourtSerializer
+
+    lookup_url_kwarg = "court_id"
 
 
 class CourtAvailableSchedulesView(generics.RetrieveAPIView):

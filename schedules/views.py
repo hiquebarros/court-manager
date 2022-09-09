@@ -9,7 +9,7 @@ import datetime
 
 import ipdb
 
-class ScheduleCreateView(generics.CreateAPIView):
+class ScheduleCreateView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
 
     queryset = Schedule.objects.all()
