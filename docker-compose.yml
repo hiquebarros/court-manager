@@ -3,7 +3,7 @@ services:
     image: postgres
     env_file: .env
     ports:
-      - 5435:5432
+      - 5433:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
 

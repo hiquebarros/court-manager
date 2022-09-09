@@ -1,12 +1,15 @@
-from users.models import User
+from django.contrib.auth import authenticate
 from rest_framework import generics
-from rest_framework.views import APIView, Response, Request, status
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import authenticate
-from users.serializers import UserSerializer, LoginSerializer, UserDetailSerializer
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.views import APIView, Request, Response, status
+
+from users.models import User
 from users.permissions import IsOwnerOrAdmin
+from users.serializers import (LoginSerializer, UserDetailSerializer,
+                               UserSerializer)
+
 
 class ListUsersView(generics.ListAPIView):
     queryset = User.objects.all()
@@ -26,7 +29,7 @@ class LoginView(APIView):
         if user:
             token,_ = Token.objects.get_or_create(user=user)
             return Response({"token": token.key}, status.HTTP_200_OK)
-				
+
         return Response({"detail": "invalid username or password"}, status.HTTP_400_BAD_REQUEST)
 
 class UserDetailsView(generics.RetrieveUpdateDestroyAPIView):
