@@ -8,8 +8,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         return request.user.is_owner
 
+    
 class IsFacilityOwner(permissions.BasePermission):
     def has_object_permission(self, request: Request, view: View, facility):
-        if request.user.id != facility.user.id:
-            return False
-        return True
+        return request.user.id == facility.user.id:
+            
