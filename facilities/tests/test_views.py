@@ -140,8 +140,8 @@ class FacilityViewTest(APITestCase):
 
         self.assertEqual(response.status_code, 403)
 
-    def test_update_facility_delete_view(self):
-        print("test update_facility_delete_view")
+    def test_delete_facility_view(self):
+        print("test delete_facility_view")
 
         all_sport_facility = Facility.objects.all()
 
