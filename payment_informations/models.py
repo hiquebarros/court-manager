@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
+from creditcards.models import CardNumberField, SecurityCodeField
 from django_cryptography.fields import encrypt
 
 
