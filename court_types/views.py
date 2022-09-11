@@ -15,6 +15,10 @@ class Court_typeView(generics.ListCreateAPIView):
     queryset = Court_type.objects.all()
     serializer_class = Court_typeSerializer
 
+    def perform_create(self, serializer):
+        ipdb.set_trace()
+        return super().perform_create(serializer)
+
 
 class Court_typeViewDetail(generics.DestroyAPIView):
     authentication_classes = [TokenAuthentication]
