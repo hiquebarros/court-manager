@@ -9,12 +9,10 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import django_on_heroku
 from pathlib import Path
 import os
-from pathlib import Path
-
 import dotenv
+import django_on_heroku
 
 dotenv.load_dotenv()
 
