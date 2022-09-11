@@ -8,6 +8,7 @@ coverage==6.4.4
 decorator==5.1.1
 dj-database-url==1.0.0
 Django==4.1.1
+django-on-heroku==1.1.2
 djangorestframework==3.13.1
 drf-spectacular==0.23.1
 executing==1.0.0
@@ -44,3 +45,4 @@ tomli==2.0.1
 traitlets==5.3.0
 uritemplate==4.1.1
 wcwidth==0.2.5
+whitenoise==6.2.0
