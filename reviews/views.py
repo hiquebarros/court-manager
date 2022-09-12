@@ -1,10 +1,13 @@
-from django.contrib.auth import authenticate
+from rest_framework.exceptions import ValidationError
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from reviews.permissions import ReviewCustomPermission
 from reviews.serializers import ReviewSerializer
 from reviews.models import Review
 from courts.models import Court
+
+class CustomError(Exception):
+    pass
 
 class ReviewView(generics.ListCreateAPIView, generics.UpdateAPIView, generics.DestroyAPIView):
     queryset = Review.objects.all()
@@ -13,12 +16,16 @@ class ReviewView(generics.ListCreateAPIView, generics.UpdateAPIView, generics.De
     permission_classes = [ReviewCustomPermission]
     lookup_url_kwarg = ["facility_id", "court_id", "review_id"]
 
+
     def get_queryset(self):
         court = Court.objects.get(id=self.kwargs['court_id'])
         return court.reviews
     
     def perform_create(self, serializer):
         court = Court.objects.get(id=self.kwargs['court_id'])
+        review_validator = Review.objects.filter(court=court, user=self.request.user)
+        if review_validator:
+            raise ValidationError({"detail": "User already reviewed that court"})
         serializer.save(user=self.request.user, court=court)
     
     def get_object(self):
