@@ -17,7 +17,6 @@ def get_week_day(day):
 
 
 class CourtSerializer(serializers.ModelSerializer):
-    user = UserBaseInfoSerializer()
     class Meta:
         model = Court
         fields = "__all__"
@@ -39,7 +38,6 @@ class HolidaySerializer(serializers.ModelSerializer):
 
 class CourtAvailableSchedulesSerializers(serializers.ModelSerializer):
     available_hours = serializers.SerializerMethodField()
-    user = UserBaseInfoSerializer()
 
     class Meta:
         model = Court

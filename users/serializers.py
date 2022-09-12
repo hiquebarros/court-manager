@@ -33,9 +33,9 @@ class UserDetailSerializer(serializers.ModelSerializer):
         read_only_fields = ["current_schedules","schedule_history", "is_owner", "date_joined"]
 
     def get_schedule_history(self, obj):
-        ipdb.set_trace()
-        return [schedule for schedule in obj.schedules.all() if schedule.datetime < now()]
+
+        return [schedule.id for schedule in obj.schedules.all() if schedule.datetime < now()]
 
     def get_current_schedules(self, obj):
         # ipdb.set_trace()
-        return [schedule for schedule in obj.schedules.all() if schedule.datetime >= now()]
+        return [schedule.id for schedule in obj.schedules.all() if schedule.datetime >= now()]
