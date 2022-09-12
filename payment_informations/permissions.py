@@ -2,7 +2,7 @@ from rest_framework import permissions
 from rest_framework.views import Request, View
 from users.models import User
 
-from .models import Payment_information
+from .models import PaymentInformation
 
 
 
