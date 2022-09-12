@@ -1,9 +1,9 @@
 from rest_framework import generics
-
 from .models import PaymentInformation
 from .serializers import PaymentInformationSerializer
 from .permissions import IsAuthenticated, IsOwner
 from rest_framework.authentication import TokenAuthentication
+
 
 class PaymentInformationView(generics.CreateAPIView):
         authentication_classes = [TokenAuthentication]
@@ -30,3 +30,4 @@ class PaymentDetailView(generics.RetrieveDestroyAPIView):
         queryset= PaymentInformation.objects.all()
         serializer_class = PaymentInformationSerializer
         lookup_url_kwarg = "payment_id"
+
