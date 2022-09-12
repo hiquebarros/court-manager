@@ -5,7 +5,6 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import Response
 from django.shortcuts import get_object_or_404
 
-
 import ipdb
 
 class CourtView(generics.ListCreateAPIView):

@@ -13,6 +13,11 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data:dict) -> User:
         return User.objects.create_user(**validated_data)
 
+class UserBaseInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username", "email", "first_name", "last_name"]
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
@@ -28,7 +33,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
         read_only_fields = ["current_schedules","schedule_history", "is_owner", "date_joined"]
 
     def get_schedule_history(self, obj):
-        # ipdb.set_trace()
+        ipdb.set_trace()
         return [schedule for schedule in obj.schedules.all() if schedule.datetime < now()]
 
     def get_current_schedules(self, obj):
