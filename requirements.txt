@@ -14,7 +14,6 @@ django-appconf==1.0.5
 django-credit-cards==0.4.1
 django-cryptography==1.1
 django-on-heroku==1.1.2
-django-pandas==0.6.6
 djangorestframework==3.13.1
 drf-spectacular==0.23.1
 executing==1.0.0

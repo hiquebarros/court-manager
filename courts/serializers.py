@@ -3,8 +3,11 @@ from rest_framework import serializers
 from courts.models import Court, NonOperatingDays, Holiday
 from schedules.models import Schedule
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import pandas as pd
+import ipdb
+
+from users.serializers import UserBaseInfoSerializer
 
 
 def get_week_day(day):
@@ -14,6 +17,7 @@ def get_week_day(day):
 
 
 class CourtSerializer(serializers.ModelSerializer):
+    user = UserBaseInfoSerializer()
     class Meta:
         model = Court
         fields = "__all__"
@@ -35,6 +39,7 @@ class HolidaySerializer(serializers.ModelSerializer):
 
 class CourtAvailableSchedulesSerializers(serializers.ModelSerializer):
     available_hours = serializers.SerializerMethodField()
+    user = UserBaseInfoSerializer()
 
     class Meta:
         model = Court
@@ -48,10 +53,11 @@ class CourtAvailableSchedulesSerializers(serializers.ModelSerializer):
         
         if input_date.date() < today.date():
             return {"detail": "You can't schedule in the past... yet"}
-
+        # ipdb.set_trace()
         month_range = vars(obj)['max_schedule_range_in_months']
 
-        if input_date.date() > today.date() + pd.DateOffset(month=month_range):
+        # if input_date.date() > today.date() + pd.DateOffset(month=month_range):
+        if input_date.date() > today.date() + timedelta(days=30*month_range):
             return {"detail": "You can't schedule that long in the future... yet"} 
     
         court_id = vars(obj)['id']
