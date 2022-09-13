@@ -6,9 +6,6 @@ from reviews.serializers import ReviewSerializer
 from reviews.models import Review
 from courts.models import Court
 
-class CustomError(Exception):
-    pass
-
 class ReviewView(generics.ListCreateAPIView, generics.UpdateAPIView, generics.DestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
