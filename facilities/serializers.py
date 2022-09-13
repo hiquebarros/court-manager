@@ -5,6 +5,13 @@ from .models import Facility
 
 
 class FacilitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Facility
+        fields = ["name", "email", "phone_number", "address_id", "user"]
+        read_only_fields = ["user"]
+
+
+class DetailedFacilitySerializer(serializers.ModelSerializer):
     user = UserBaseInfoSerializer(read_only=True)
     class Meta:
         model = Facility
