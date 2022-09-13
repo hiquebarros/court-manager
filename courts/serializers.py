@@ -36,7 +36,6 @@ class HolidaySerializer(serializers.ModelSerializer):
 
 class CourtAvailableSchedulesSerializers(serializers.ModelSerializer):
     available_hours = serializers.SerializerMethodField()
-    user = UserBaseInfoSerializer()
 
     class Meta:
         model = Court

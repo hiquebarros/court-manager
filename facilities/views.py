@@ -5,7 +5,7 @@ from rest_framework.authentication import TokenAuthentication
 from facilities.models import Facility
 
 from .permissions import IsOwner, IsTheOwner, IsTheOwnerOrAdmin
-from .serializers import FacilitySerializer
+from .serializers import FacilitySerializer, DetailedFacilitySerializer
 
 
 class FacilityView(generics.ListCreateAPIView):
@@ -17,10 +17,10 @@ class FacilityView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-class FacilityDetailView(generics.UpdateAPIView):
+class FacilityDetailView(generics.RetrieveUpdateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsTheOwner]
-    serializer_class = FacilitySerializer
+    serializer_class = DetailedFacilitySerializer
     queryset = Facility.objects.all()
     lookup_url_kwarg = "sport_facility_id"
 
