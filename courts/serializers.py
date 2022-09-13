@@ -3,7 +3,7 @@ from rest_framework import serializers
 from courts.models import Court
 from courts.models import Court, Holiday, NonOperatingDay
 from utils.court_available_hours import list_court_available_hours
-
+from facilities.serializers import FacilityBaseInfoSerializer
 import ipdb
 
 
@@ -14,16 +14,23 @@ def get_week_day(day):
 
 
 class CourtSerializer(serializers.ModelSerializer):
+    sport_facility = FacilityBaseInfoSerializer(read_only=True)
     class Meta:
         model = Court
         fields = "__all__"
         read_only_fields = ["sport_facility"]
 
 
-class CourtBaseInfoSerializer(serializers.ModelSerializer):
+class CourtInfoForScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Court
-        fields = ["id", "sport_facility"]
+        fields = [ "name", "price_by_hour"]
+
+class CourtInfoForReviewSerializer(serializers.ModelSerializer):
+    sport_facility = FacilityBaseInfoSerializer(read_only=True)
+    class Meta:
+        model = Court
+        fields = [ "name", "sport_facility"]
 
 
 class NonOperatingDaysSerializer(serializers.ModelSerializer):

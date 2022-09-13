@@ -8,10 +8,12 @@ from courts.models import Court
 
 
 class ReviewView(generics.ListCreateAPIView, generics.UpdateAPIView, generics.DestroyAPIView):
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [ReviewCustomPermission]
+
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    
     lookup_url_kwarg = ["court_id", "review_id"]
 
 
@@ -19,12 +21,14 @@ class ReviewView(generics.ListCreateAPIView, generics.UpdateAPIView, generics.De
         court = Court.objects.get(id=self.kwargs['court_id'])
         return court.reviews
     
+
     def perform_create(self, serializer):
         court = Court.objects.get(id=self.kwargs['court_id'])
         review_validator = Review.objects.filter(court=court, user=self.request.user)
         if review_validator:
             raise ValidationError({"detail": "User already reviewed that court"})
         serializer.save(user=self.request.user, court=court)
+    
     
     def get_object(self):
         review = Review.objects.get(id=self.kwargs['review_id'])

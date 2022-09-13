@@ -17,3 +17,8 @@ class DetailedFacilitySerializer(serializers.ModelSerializer):
         model = Facility
         fields = "__all__"
         depth = 1
+
+class FacilityBaseInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Facility
+        fields = ["name"]

@@ -1,4 +1,7 @@
 from rest_framework import permissions
+from courts.models import Court
+
+import ipdb
         
 class ReviewCustomPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -8,10 +11,10 @@ class ReviewCustomPermission(permissions.BasePermission):
             return request.user.is_authenticated
         
         if request.method == 'PATCH':
-            return request.user.is_owner and request.user.id == obj.user_id
+            return  request.user == obj.user
 
         if request.method == 'DELETE':
-            return request.user.is_superuser or (request.user.is_owner and request.user.id == obj.user_id)
+            return request.user.is_superuser or request.user == obj.user
         
         return True
         

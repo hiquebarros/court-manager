@@ -38,8 +38,11 @@ class ScheduleCreateView(generics.ListCreateAPIView):
           
         available_hours = list_court_available_hours(datetime_obj, court)
 
+        number_of_hours = request.data["number_of_hours"]
+
         starting_hour = datetime_obj.hour
-        final_hour = datetime_obj.hour + request.data["number_of_hours"]
+        
+        final_hour = datetime_obj.hour + number_of_hours
 
         schedule_hours_list = [hour for hour in range(starting_hour, final_hour)]
 
@@ -68,7 +71,7 @@ class ScheduleCreateView(generics.ListCreateAPIView):
 
             date_str = set_new_hour(input_date_str, hour)
 
-            serializer = self.get_serializer(data={"datetime": date_str, "number_of_hours": 2})
+            serializer = self.get_serializer(data={"datetime": date_str, "number_of_hours": number_of_hours})
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
 
@@ -108,7 +111,7 @@ class CancelScheduleView(generics.DestroyAPIView):
         self.check_object_permissions(self.request, first_schedule)
         
         first_schedule_hour = first_schedule.datetime.hour
-        last_schedule_hour = first_schedule_hour + first_schedule.number_of_hours
+        last_schedule_hour = first_schedule_hour + (first_schedule.number_of_hours - 1)
         
         schedules_hours = Schedule.objects.filter(user=first_schedule.user, datetime__hour__range=(first_schedule_hour, last_schedule_hour))
         
