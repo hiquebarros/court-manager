@@ -10,11 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+from operator import truediv
 from pathlib import Path
 
+import django_on_heroku
 import dotenv
-
-# import django_on_heroku
 
 dotenv.load_dotenv()
 
@@ -167,4 +167,10 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'users.User'
 
-# django_on_heroku.settings(locals())
+django_on_heroku.settings(locals())
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Court Manager',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
