@@ -9,10 +9,12 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-from pathlib import Path
 import os
+from pathlib import Path
+
 import dotenv
-import django_on_heroku
+
+# import django_on_heroku
 
 dotenv.load_dotenv()
 
@@ -49,7 +51,7 @@ INSTALLED_APPS = [
     'court_types',
     'courts',
     'facilities',
-    'payment_informations',
+    # 'payment_informations',
     'reviews',
     'schedules',
 ]
@@ -166,4 +168,4 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'users.User'
 
-django_on_heroku.settings(locals())
+# django_on_heroku.settings(locals())
