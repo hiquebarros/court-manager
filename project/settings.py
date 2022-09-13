@@ -172,5 +172,5 @@ django_on_heroku.settings(locals())
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Court Manager',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': True,
+    'SERVE_INCLUDE_SCHEMA': False,
 }
