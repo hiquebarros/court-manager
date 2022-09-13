@@ -29,10 +29,10 @@ class Holiday(models.Model):
 class Court(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     name = models.CharField(max_length=127)
-    capacity = models.IntegerField()
+    capacity = models.PositiveIntegerField()
     is_indoor = models.BooleanField(default=False)
     price_by_hour = models.DecimalField(max_digits=10, decimal_places=2)
-    max_schedule_range_in_days = models.IntegerField()
+    max_schedule_range_in_days = models.PositiveIntegerField()
     sport = models.CharField(max_length=127)
 
     opening_hour = models.TimeField()

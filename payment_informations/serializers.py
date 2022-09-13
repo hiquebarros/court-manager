@@ -4,7 +4,7 @@ from rest_framework.serializers import ModelSerializer
 
 
 class PaymentInformationSerializer(ModelSerializer):
-    user = UserBaseInfoSerializer()
+    user = UserBaseInfoSerializer(read_only=True)
     
     class Meta:
         model= PaymentInformation
