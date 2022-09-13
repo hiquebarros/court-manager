@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'users',
     'addresses',
-    'court_types',
     'courts',
     'facilities',
     'payment_informations',
