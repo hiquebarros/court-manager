@@ -7,7 +7,7 @@ from .models import Facility
 class FacilitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Facility
-        fields = ["name", "email", "phone_number", "address_id", "user"]
+        fields = ["id","name", "email", "phone_number", "address_id", "user"]
         read_only_fields = ["user"]
 
 

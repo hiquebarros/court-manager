@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'addresses',
     'courts',
     'facilities',
-    # 'payment_informations',
+    'payment_informations',
     'reviews',
     'schedules',
 ]
