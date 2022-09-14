@@ -9,9 +9,11 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import django_on_heroku
-from pathlib import Path
 import os
+from operator import truediv
+from pathlib import Path
+
+import django_on_heroku
 import dotenv
 
 dotenv.load_dotenv()
@@ -46,7 +48,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'users',
     'addresses',
-    'court_types',
     'courts',
     'facilities',
     'payment_informations',
@@ -159,8 +160,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.TokenAuthentication',
+   )
 }
 
 AUTH_USER_MODEL = 'users.User'
 
 django_on_heroku.settings(locals())
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Court Manager',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
