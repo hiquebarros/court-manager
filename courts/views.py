@@ -37,7 +37,7 @@ class CourtView(generics.ListCreateAPIView):
 
 class CourtDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsCourtOwnerOrReadOnly]
+    permission_classes = [IsFacilityOwnerOrAdmin]
 
     queryset = Court.objects.all()
     serializer_class = CourtSerializer
