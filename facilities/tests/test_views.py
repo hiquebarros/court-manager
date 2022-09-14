@@ -71,7 +71,7 @@ class FacilityViewTest(APITestCase):
         response = self.client.post(self.base_url, sport_facility_data)
 
         self.assertEqual(response.status_code, 201)
-        expected_keys = ["id", "name", "email", "phone_number", "user", "address"]
+        expected_keys = ["id", "name", "email", "phone_number", "user", "address_id"]
 
         for key in expected_keys:
             self.assertIn(key, response.data)

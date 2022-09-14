@@ -17,6 +17,8 @@ class AddressViewTest(APITestCase):
         cls.user_not_owner = baker.make("users.User")
 
         cls.sport_facility = baker.make("facilities.Facility", user=cls.user)
+        cls.sport_facility2 = baker.make("facilities.Facility", user=cls.user)
+        cls.sport_facility3 = baker.make("facilities.Facility", user=cls.user)
 
         cls.address_data = {
             "street": "Antonio Azevedo",
@@ -30,6 +32,13 @@ class AddressViewTest(APITestCase):
             "number": "01",
             "zipcode": "2345",
             "state": "RJ"
+        }
+
+        cls.address_data_3 = {
+            "street": "Azevedao",
+            "number": "02",
+            "zipcode": "3345",
+            "state": "RS"
         }
 
         Token.objects.create(user=cls.user)
@@ -48,7 +57,7 @@ class AddressViewTest(APITestCase):
 
         self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
 
-        response = self.client.post(reverse("sport_facility_address", kwargs={"facility_id": self.sport_facility.id}), self.address_data)
+        response = self.client.post(reverse("sport_facility_address", kwargs={"facility_id": self.sport_facility3.id}), self.address_data)
 
         self.assertEqual(response.status_code, 201)
 
@@ -93,18 +102,12 @@ class AddressViewTest(APITestCase):
     def test_address_views_permissions(self):
         print("test address_views_permissions")
 
-        not_a_owner_token = Token.objects.get(user__id=self.user_not_owner.id)
-
-        self.client.credentials(HTTP_AUTHORIZATION="Token " + not_a_owner_token.key)
-
-        response = self.client.post(reverse("sport_facility_address", kwargs={"facility_id": self.sport_facility.id}), self.address_data)
-
-        self.assertEqual(response.status_code, 403)
+        updated_data = {"street": "Rua Cezamo"}
 
         not_the_owner_token = Token.objects.get(user__id=self.user_2.id)
 
         self.client.credentials(HTTP_AUTHORIZATION="Token " + not_the_owner_token.key)
 
-        response = self.client.get(reverse("sport_facility_address", kwargs={"facility_id": self.sport_facility.id}))
+        response = self.client.patch(reverse("sport_facility_address", kwargs={"facility_id": self.sport_facility2.id}), updated_data)
 
         self.assertEqual(response.status_code, 403)

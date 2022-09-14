@@ -11,7 +11,7 @@ class AddressTest(TestCase):
             "street": "Rodovia Aroldo 111",
             "number": "123",
             "zipcode": "12334",
-            "state": "Sao Paulo"
+            "state": "SP"
         }
 
         cls.address = Address.objects.create(**cls.address_data)

@@ -38,9 +38,9 @@ class FacilityTest(TestCase):
 
         cls.sport_facility_instance = Facility.objects.create(**cls.sport_facility_data, user=cls.user_instance)
 
-        cls.address = Address.objects.create(street="Rodovia Aroldo, 111", number="2121", zipcode="2345",state="Sao Paulo")
+        cls.address = Address.objects.create(street="Rodovia Aroldo, 111", number="2121", zipcode="2345",state="SP")
 
-        cls.address_2 = Address.objects.create(street="Av Aroldo, 22", number="2", zipcode="2111",state="Sao Paulo")
+        cls.address_2 = Address.objects.create(street="Av Aroldo, 22", number="2", zipcode="2111",state="SP")
 
     def test_sport_facility_attributes(self):
         print("test sport_facility_attributes")

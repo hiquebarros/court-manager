@@ -5,6 +5,7 @@ from rest_framework.views import status
 from users.models import User
 from facilities.models import Facility
 from courts.models import Court
+from django.urls import reverse
 
 class ReviewViewTest(APITestCase):
     @classmethod
@@ -76,7 +77,7 @@ class ReviewViewTest(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token)
         response = self.client.post(f'/api/sport_facilities/courts/{self.court.id}/reviews/', data=self.review_data)
 
-        expected_return_fields = ('id', 'rating', 'review', 'court', 'user')
+        expected_return_fields = ('id', 'user', 'court', 'rating', 'review')
 
         self.assertEqual(len(response.data.keys()), 5)
 
@@ -94,7 +95,7 @@ class ReviewViewTest(APITestCase):
 
         review_id = post_response.data['id']
 
-        patch_response = self.client.patch(f'/api/sport_facilities/courts/{self.court.id}/reviews/{review_id}', data={"street": "patch"})
+        patch_response = self.client.patch(reverse("specific-review", kwargs={"court_id": self.court.id, "review_id": review_id}), data={"street": "patch"})
 
         expected_status_code = status.HTTP_200_OK
 
@@ -115,7 +116,7 @@ class ReviewViewTest(APITestCase):
 
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token2)
 
-        patch_response = self.client.patch(f'/api/sport_facilities/courts/{self.court.id}/reviews/{review_id}', data={"street": "patch"})
+        patch_response = self.client.patch(reverse("specific-review", kwargs={"court_id": self.court.id, "review_id": review_id}), data={"street": "patch"})
 
         expected_status_code = status.HTTP_403_FORBIDDEN
 
@@ -131,7 +132,7 @@ class ReviewViewTest(APITestCase):
 
         review_id = post_response.data['id']
 
-        patch_response = self.client.delete(f'/api/sport_facilities/courts/{self.court.id}/reviews/{review_id}')
+        patch_response = self.client.delete(reverse("specific-review", kwargs={"court_id": self.court.id, "review_id": review_id}))
 
         expected_status_code = status.HTTP_204_NO_CONTENT
 
