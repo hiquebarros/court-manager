@@ -17,6 +17,9 @@ from schedules.serializers import ScheduleSerializer
 
 from .permissions import IsFacilityOwner, IsOwnerOrFacilityOwnerOrAdmin
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 class ScheduleCreateView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
@@ -77,6 +80,15 @@ class ScheduleCreateView(generics.ListCreateAPIView):
 
 
         headers = self.get_success_headers(serializer.data)
+
+        send_mail(
+            subject = "Confirmação de agendamento de quadra",
+            message = "Seu agendamento em " + court.sport_facility.name + ", no dia: " + str(datetime_obj.day) + "/" + str(datetime_obj.month) + "/" + str(datetime_obj.year) + " às " + str(datetime_obj.hour) + " horas, foi efetuado com sucesso.",
+            from_email = settings.EMAIL_HOST_USER,
+            recipient_list = [request.user.email],
+            fail_silently = False
+)
+
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
@@ -117,6 +129,23 @@ class CancelScheduleView(generics.DestroyAPIView):
         
         for instance in schedules_hours:
             self.perform_destroy(instance)
+
+        if request.user.is_owner:
+            send_mail(
+            subject = "Confirmação de cancelamento de quadra",
+            message = "O agendamento em " + first_schedule.court.name + " às " + str(first_schedule.datetime.hour) + " horas, foi cancelado com sucesso.",
+            from_email = settings.EMAIL_HOST_USER,
+            recipient_list = [request.user.email],
+            fail_silently = False
+        )
+        else:
+            send_mail(
+                subject = "Confirmação de cancelamento de quadra",
+                message = "Seu agendamento em " + first_schedule.court.sport_facility.name + " foi cancelado com sucesso.",
+                from_email = settings.EMAIL_HOST_USER,
+                recipient_list = [request.user.email],
+                fail_silently = False
+            )
         
         return Response(status=status.HTTP_204_NO_CONTENT)
 
