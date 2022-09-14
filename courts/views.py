@@ -9,7 +9,7 @@ from courts.serializers import (CourtAvailableSchedulesSerializers,
                                 CourtSerializer, HolidaySerializer,
                                 NonOperatingDaysSerializer)
 
-from .permissions import IsFacilityOwnerOrAdmin, IsFacilityOwnerOrReadOnly
+from .permissions import IsFacilityOwnerOrAdmin, IsFacilityOwnerOrReadOnly, IsCourtOwnerOrReadOnly
 
 
 class CourtView(generics.ListCreateAPIView):
@@ -57,7 +57,7 @@ class CourtAvailableSchedulesView(generics.RetrieveAPIView):
 
 class RegisterNonOperantingDay(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsFacilityOwnerOrReadOnly]
+    permission_classes = [IsCourtOwnerOrReadOnly]
 
     queryset = NonOperatingDay.objects.all()
     serializer_class = NonOperatingDaysSerializer
@@ -74,7 +74,7 @@ class RegisterNonOperantingDay(generics.ListCreateAPIView):
 
 class DeleteNonOperantingDay(generics.DestroyAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsFacilityOwnerOrAdmin]
+    permission_classes = [IsCourtOwnerOrReadOnly]
 
     queryset = NonOperatingDay.objects.all()
     serializer_class = NonOperatingDaysSerializer
@@ -84,7 +84,7 @@ class DeleteNonOperantingDay(generics.DestroyAPIView):
 
 class RegisterHolidayView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsFacilityOwnerOrReadOnly]
+    permission_classes = [IsCourtOwnerOrReadOnly]
 
     queryset = Holiday.objects.all()
     serializer_class = HolidaySerializer
@@ -101,7 +101,7 @@ class RegisterHolidayView(generics.ListCreateAPIView):
 
 class DeleteHolidayView(generics.DestroyAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsFacilityOwnerOrAdmin]
+    permission_classes = [IsCourtOwnerOrReadOnly]
 
     queryset = Holiday.objects.all()
     serializer_class = HolidaySerializer
