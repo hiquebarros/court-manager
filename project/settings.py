@@ -15,21 +15,27 @@ from pathlib import Path
 
 import django_on_heroku
 import dotenv
+import environ
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 
 dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+environ.Env.read_env(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = ["localhost", "0.0.0.0"]
 
@@ -102,9 +108,9 @@ else:
     DATABASES = {
 				"default": {
 						"ENGINE": "django.db.backends.postgresql",
-				        "NAME": os.getenv("POSTGRES_DB"),
-				        "USER": os.getenv("POSTGRES_USER"),
-				        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+				        "NAME": env("POSTGRES_DB"),
+				        "USER": env("POSTGRES_USER"),
+				        "PASSWORD": env("POSTGRES_PASSWORD"),
 				        # "HOST": "localhost",
 				        # Nome do serviço rodando o postgres no docker compose
 				        "HOST": "db",
@@ -174,3 +180,10 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
